@@ -115,21 +115,21 @@ export const StakingMigration = () => {
   const steps = [
     ...(realmsData?.bridgedRealms.length
       ? [
-        {
-          label: `Unstake`,
-          description: `${realmsData.wallet?.bridgedRealmsHeld} Realms from Galleon`,
-          id: "unstake-galleon",
-        },
-      ]
+          {
+            label: `Unstake`,
+            description: `${realmsData.wallet?.bridgedRealmsHeld} Realms from Galleon`,
+            id: "unstake-galleon",
+          },
+        ]
       : []),
     ...(realmsData?.bridgedV2Realms.length
       ? [
-        {
-          label: `Unstake`,
-          description: `${realmsData.wallet?.bridgedRealmsHeld} Realms from Carrack`,
-          id: "unstake-carrack",
-        },
-      ]
+          {
+            label: `Unstake`,
+            description: `${realmsData.wallet?.bridgedRealmsHeld} Realms from Carrack`,
+            id: "unstake-carrack",
+          },
+        ]
       : []),
     {
       label: "Bridge",
