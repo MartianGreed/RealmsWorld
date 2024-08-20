@@ -1,5 +1,4 @@
-import type { Realm, UsersRealmsQuery } from "@/types/subgraph";
-import type { ColumnDef } from "@tanstack/react-table";
+import type { UsersRealmsQuery } from "@/types/subgraph";
 import { useState } from "react";
 import Link from "next/link";
 import { GalleonStaking } from "@/abi/L1/v1GalleonStaking";
@@ -115,21 +114,21 @@ export const StakingMigration = () => {
   const steps = [
     ...(realmsData?.bridgedRealms.length
       ? [
-          {
-            label: `Unstake`,
-            description: `${realmsData.wallet?.bridgedRealmsHeld} Realms from Galleon`,
-            id: "unstake-galleon",
-          },
-        ]
+        {
+          label: `Unstake`,
+          description: `${realmsData.wallet?.bridgedRealmsHeld} Realms from Galleon`,
+          id: "unstake-galleon",
+        },
+      ]
       : []),
     ...(realmsData?.bridgedV2Realms.length
       ? [
-          {
-            label: `Unstake`,
-            description: `${realmsData.wallet?.bridgedRealmsHeld} Realms from Carrack`,
-            id: "unstake-carrack",
-          },
-        ]
+        {
+          label: `Unstake`,
+          description: `${realmsData.wallet?.bridgedRealmsHeld} Realms from Carrack`,
+          id: "unstake-carrack",
+        },
+      ]
       : []),
     {
       label: "Bridge",

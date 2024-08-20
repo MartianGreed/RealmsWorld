@@ -62,7 +62,7 @@ const BridgeBadge = ({
       <span className="text-lg">
         {
           CHAIN_IDS_TO_NAMES[
-            isL1 ? SUPPORTED_L1_CHAIN_ID : SUPPORTED_L2_CHAIN_ID
+          isL1 ? SUPPORTED_L1_CHAIN_ID : SUPPORTED_L2_CHAIN_ID
           ]
         }
       </span>
@@ -408,24 +408,24 @@ export default function NftBridgeModal() {
 
   const steps = isSourceL1
     ? ([
-        {
-          label: "Approve",
-          description: `Allow Bridge Contract access to Realms`,
-          id: "approve",
-        },
-        {
-          label: "Bridge",
-          description: `Realms to Starknet`,
-          id: "bridge",
-        },
-      ] satisfies StepItem[])
+      {
+        label: "Approve",
+        description: `Allow Bridge Contract access to Realms`,
+        id: "approve",
+      },
+      {
+        label: "Bridge",
+        description: `Realms to Starknet`,
+        id: "bridge",
+      },
+    ] satisfies StepItem[])
     : ([
-        {
-          label: "Approve & Bridge",
-          description: `Realms to Ethereum`,
-          id: "bridge",
-        },
-      ] satisfies StepItem[]);
+      {
+        label: "Approve & Bridge",
+        description: `Realms to Ethereum`,
+        id: "bridge",
+      },
+    ] satisfies StepItem[]);
 
   if (isNftBridgeOpen) {
     return (

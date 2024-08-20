@@ -43,8 +43,8 @@ interface ChildrenProps {
 interface Props {
   open: boolean;
   token:
-    | RouterOutputs["erc721Tokens"]["byId"]
-    | RouterOutputs["erc721Tokens"]["all"]["items"][number];
+  | RouterOutputs["erc721Tokens"]["byId"]
+  | RouterOutputs["erc721Tokens"]["all"]["items"][number];
   tokenId?: string;
   defaultQuantity?: number;
   orderId?: number;

@@ -191,13 +191,13 @@ export const Overview = () => {
                         data={[
                           ...(balance
                             ? [
-                                {
-                                  amount: Number(formatEther(balance)).toFixed(
-                                    5,
-                                  ),
-                                  timestamp: null,
-                                },
-                              ]
+                              {
+                                amount: Number(formatEther(balance)).toFixed(
+                                  5,
+                                ),
+                                timestamp: null,
+                              },
+                            ]
                             : []),
                           ...(lordsRewardsClaims ?? []),
                         ]}
