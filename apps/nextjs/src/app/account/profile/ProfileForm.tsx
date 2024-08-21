@@ -98,7 +98,6 @@ export const ProfileForm = ({
         <form
           ref={formRef}
           onSubmit={form.handleSubmit((data) => {
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
             createDelegateProfile.mutate(data);
           })}
         >

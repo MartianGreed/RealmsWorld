@@ -1,4 +1,5 @@
-import type { UsersRealmsQuery } from "@/types/subgraph";
+import type { Realm, UsersRealmsQuery } from "@/types/subgraph";
+import type { ColumnDef } from "@tanstack/react-table";
 import { useState } from "react";
 import Link from "next/link";
 import { GalleonStaking } from "@/abi/L1/v1GalleonStaking";
