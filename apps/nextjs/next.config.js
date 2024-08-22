@@ -77,6 +77,7 @@ const config = {
       { protocol: "https", hostname: "*.ipfs.nftstorage.link" },
       { protocol: "https", hostname: "ethplorer.io" },
       { protocol: "https", hostname: "avatars.githubusercontent.com" },
+      { protocol: "https", hostname: "media.arkproject.dev" },
     ],
   },
   async headers() {

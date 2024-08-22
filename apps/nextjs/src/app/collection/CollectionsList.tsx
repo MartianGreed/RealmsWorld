@@ -1,10 +1,13 @@
 import { CollectionCard } from "@/app/_components/CollectionCard";
-import { SUPPORTED_L1_CHAIN_ID } from "@/constants/env";
+import { SUPPORTED_L1_CHAIN_ID, SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
 import { api } from "@/trpc/server";
 
 import { CollectionAddresses } from "@realms-world/constants";
 
 import { getCollections } from "../../lib/reservoir/getCollections";
+import { getCollections as getArkCollections } from "@/lib/ark/getCollection";
+import { ArkMarketplaceClientFetch } from "@/lib/ark/client";
+import type { Collection } from "@/types/ark";
 
 export const metadata = {
   title: "Lootverse Collections",
@@ -13,14 +16,11 @@ export const metadata = {
 };
 
 export default async function CollectionsList() {
-  const { collections } = await getCollections([
-    {
-      contract: CollectionAddresses.realms[
-        SUPPORTED_L1_CHAIN_ID
-      ] as `0x${string}`,
-    },
-  ]);
+  const collectionAddress = CollectionAddresses.realms[SUPPORTED_L2_CHAIN_ID] as `0x${string}`;
+  const { data: collection } = await getArkCollections({ client: ArkMarketplaceClientFetch, collectionAddress });
+
   const erc721Collections = await api.erc721Collections.all({});
+  console.log(erc721Collections);
 
   const l2Collections = [
     {
@@ -51,18 +51,13 @@ export default async function CollectionsList() {
 
   return (
     <div className="grid w-full grid-cols-1 gap-6 px-4 sm:px-0">
-      {collections?.map((collection, index) => {
-        return (
-          <CollectionCard
-            price={collection.floorAsk?.price?.amount?.native}
-            symbol={collection.floorAsk?.price?.currency?.symbol}
-            name={collection.name}
-            link={"/realms"}
-            image={collection.image}
-            key={index}
-          />
-        );
-      })}
+      <CollectionCard
+        price={collection.floor ?? 0}
+        symbol={"LORDS"}
+        name={collection.name}
+        link={"/realms"}
+        image={collection.image}
+      />
       {erc721Collections.items.map((collection, index) => {
         const collectionInfo = l2Collections.find(
           (collectionInfo) =>
