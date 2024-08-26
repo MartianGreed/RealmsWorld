@@ -19,6 +19,8 @@ import { Web3Providers } from "@/providers/Web3Providers";
 import { TRPCReactProvider } from "@/trpc/react";
 
 import { Toaster, TooltipProvider } from "@realms-world/ui";
+import { ArkClientProvider } from "@/lib/ark/useArkClient";
+import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 
 const silkscreen = Jost({
   subsets: ["latin"],
@@ -43,6 +45,7 @@ const backgroundImageStyle = {
 };
 
 const getHeaders = cache(() => Promise.resolve(headers()));
+// const queryClient = new QueryClient();
 
 export default function Layout(props: { children: React.ReactNode }) {
   return (
@@ -56,17 +59,21 @@ export default function Layout(props: { children: React.ReactNode }) {
             <Web3Providers>
               <WalletsProvider>
                 <TooltipProvider>
-                  <main className="flex-wrap md:flex">
-                    <Sidebar />
-                    <div className="z-10 flex flex-grow flex-col">
-                      <TopNav />
-                      <div className="flex-grow">{props.children}</div>
-                    </div>
-                  </main>
-                  <Footer />
-                  <Toaster />
-                  <StarknetLoginModal />
-                  <WalletSheet />
+                  {/* <QueryClientProvider client={queryClient}> */}
+                  <ArkClientProvider>
+                    <main className="flex-wrap md:flex">
+                      <Sidebar />
+                      <div className="z-10 flex flex-grow flex-col">
+                        <TopNav />
+                        <div className="flex-grow">{props.children}</div>
+                      </div>
+                    </main>
+                    <Footer />
+                    <Toaster />
+                    <StarknetLoginModal />
+                    <WalletSheet />
+                  </ArkClientProvider>
+                  {/* </QueryClientProvider> */}
                 </TooltipProvider>
               </WalletsProvider>
             </Web3Providers>

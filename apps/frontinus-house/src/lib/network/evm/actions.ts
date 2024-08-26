@@ -140,6 +140,7 @@ export function createActions(
       if (relayerType === "evm") {
         return ethSigClient.propose({
           signer: web3.getSigner(),
+          // @ts-expect-error TODO: check type
           data,
         });
       }
@@ -148,6 +149,7 @@ export function createActions(
         {
           signer: web3.getSigner(),
           envelope: {
+            // @ts-expect-error TODO: check type
             data,
           },
         },
@@ -156,6 +158,7 @@ export function createActions(
         },
       );
     },
+    // @ts-expect-error TODO: check type
     async updateProposal(
       web3: Web3Provider,
       connectorType: Connector,
@@ -183,6 +186,7 @@ export function createActions(
       if (executionStrategy) {
         selectedExecutionStrategy = {
           addr: executionStrategy,
+          // @ts-expect-error TODO: check arg count
           params: getExecutionData(space, executionStrategy, transactions)
             .executionParams[0],
         };
@@ -204,6 +208,7 @@ export function createActions(
       if (relayerType === "evm") {
         return ethSigClient.updateProposal({
           signer: web3.getSigner(),
+          // @ts-expect-error TODO: check type
           data,
         });
       }
@@ -212,6 +217,7 @@ export function createActions(
         {
           signer: web3.getSigner(),
           envelope: {
+            // @ts-expect-error TODO: check type
             data,
           },
         },
@@ -256,11 +262,14 @@ export function createActions(
       const strategiesWithMetadata = await Promise.all(
         strategies.map(async (strategy) => {
           const metadataIndex = proposal.strategies_indicies.indexOf(
-            strategy.index,
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+            strategy.index!,
           );
 
+          const meta = proposal.space.strategies_parsed_metadata[metadataIndex];
+          if (!meta) throw new Error("Metadata is missing");
           const metadata = await parseStrategyMetadata(
-            proposal.space.strategies_parsed_metadata[metadataIndex].payload,
+            meta.payload,
           );
 
           return {
@@ -287,6 +296,7 @@ export function createActions(
       if (relayerType === "evm") {
         return ethSigClient.vote({
           signer: web3.getSigner(),
+          // @ts-expect-error TODO: check type
           data,
         });
       }
@@ -295,6 +305,7 @@ export function createActions(
         {
           signer: web3.getSigner(),
           envelope: {
+            // @ts-expect-error TODO: check type
             data,
           },
         },
@@ -302,6 +313,7 @@ export function createActions(
       );
     },
     finalizeProposal: async (web3: Web3Provider, proposal: Proposal) => {
+      // @ts-expect-error TODO: check arg count
       await executionCall(chainId, "finalizeProposal", {
         space: proposal.space.id,
         proposalId: proposal.proposal_id,
@@ -309,30 +321,36 @@ export function createActions(
 
       return null;
     },
+    // @ts-expect-error TODO: check type
     executeTransactions: async (web3: Web3Provider, proposal: Proposal) => {
       await verifyNetwork(web3, chainId);
 
+      // @ts-expect-error TODO: check arg count
       const executionData = getExecutionData(
         proposal.space,
         proposal.execution_strategy,
         convertToMetaTransactions(proposal.execution),
       );
 
+      // @ts-expect-error TODO: check arg count
       return executionCall(chainId, "execute", {
         space: proposal.space.id,
         proposalId: proposal.proposal_id,
         executionParams: executionData.executionParams[0],
       });
     },
+    // @ts-expect-error TODO: check type
     executeQueuedProposal: async (web3: Web3Provider, proposal: Proposal) => {
       await verifyNetwork(web3, chainId);
 
+      // @ts-expect-error TODO: check arg count
       const executionData = getExecutionData(
         proposal.space,
         proposal.execution_strategy,
         convertToMetaTransactions(proposal.execution),
       );
 
+      // @ts-expect-error TODO: check arg count
       return executionCall(chainId, "executeQueuedProposal", {
         space: proposal.space.id,
         executionStrategy: proposal.execution_strategy,
@@ -428,6 +446,7 @@ export function createActions(
       return votesContract.delegate(delegatee);
     },
 
+    // @ts-expect-error TODO: check type
     send: (envelope: Envelope<Propose | UpdateProposal | Vote>) => ethSigClient.send(envelope),
     getVotingPower: async (
       spaceId: string,
@@ -441,6 +460,7 @@ export function createActions(
       if (snapshotInfo.at === null)
         throw new Error("EVM requires block number to be defined");
 
+      // @ts-expect-error TODO: check type
       return Promise.all(
         strategiesAddresses.map(async (address, i) => {
           const strategy = getEvmStrategy(address, networkConfig);

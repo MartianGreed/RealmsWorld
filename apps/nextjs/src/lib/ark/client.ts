@@ -29,11 +29,19 @@ export class ArkClient {
   }
 }
 
-export const ArkMarketplaceClientFetch = new ArkClient(
-  fetch,
-  env.NEXT_PUBLIC_ARK_MARKETPLACE_API,
-);
-export const ArkOrderbookFetch = new ArkClient(
-  fetch,
-  env.NEXT_PUBLIC_ARK_ORDERBOOK_API,
-);
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const buildArkClient = (fetcher: Fetcher<any>, url: string) => {
+  return new ArkClient(fetcher, url);
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const marketPlaceClientBuilder = (fetcher: Fetcher<any>) => {
+  return buildArkClient(fetcher, env.NEXT_PUBLIC_ARK_MARKETPLACE_API);
+}
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const orderbookClientBuilder = (fetcher: Fetcher<any>) => {
+  return buildArkClient(fetcher, env.NEXT_PUBLIC_ARK_ORDERBOOK_API);
+}
+
+export const ArkMarketplaceClientFetch = marketPlaceClientBuilder(fetch);
+export const ArkOrderbookFetch = orderbookClientBuilder(fetch);

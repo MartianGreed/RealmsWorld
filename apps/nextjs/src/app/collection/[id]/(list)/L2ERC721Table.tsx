@@ -88,6 +88,10 @@ const L2ERC721Table = ({
     selectedTokenIds,
   } = useNftSelection({ userAddress: ownerAddress as `0x${string}` });
 
+  if (!erc721Tokens.pages[0]?.items.length) {
+    return <div>No assets Found</div>;
+  }
+
   return (
     <>
       {selectable && erc721Tokens.pages[0]?.items.length ? (
@@ -101,53 +105,49 @@ const L2ERC721Table = ({
         />
       ) : null}
       <div className={isGrid ? grid : list}>
-        {erc721Tokens.pages[0]?.items.length
-          ? erc721Tokens.pages.map((page) =>
-              page.items.map((token, index) => {
-                const isSelected = isNftSelected(
-                  token.token_id.toString(),
-                  token.contract_address ?? "0x",
-                );
-                return (
-                  <>
-                    {selectable ? (
-                      <button
-                        key={index}
-                        onClick={() =>
-                          toggleNftSelection(
-                            token.token_id.toString(),
-                            token.contract_address ?? "0x",
-                          )
-                        }
-                      >
-                        <L2ERC721Card
-                          selectable
-                          isSelected={isSelected}
-                          token={token}
-                          layout={isGrid ? "grid" : "list"}
-                        />
-                      </button>
-                    ) : (
-                      <Link
-                        href={`/collection/${token.contract_address && getCollectionFromAddress(token.contract_address)}/${
-                          token.token_id
-                        }`}
-                        className={`${isGrid ? "" : "flex"}`}
-                      >
-                        <L2ERC721Card
-                          key={index}
-                          token={token}
-                          layout={isGrid ? "grid" : "list"}
-                        />
-                      </Link>
-                    )}
-                  </>
-                );
-              }),
-            )
-          : "No Assets Found"}
+        {erc721Tokens.pages.map((page) =>
+          page.items.map((token, index) => {
+            const isSelected = isNftSelected(
+              token.token_id.toString(),
+              token.contract_address ?? "0x",
+            );
+            return (
+              <>
+                {selectable ? (
+                  <button
+                    key={index}
+                    onClick={() =>
+                      toggleNftSelection(
+                        token.token_id.toString(),
+                        token.contract_address ?? "0x",
+                      )
+                    }
+                  >
+                    <L2ERC721Card
+                      selectable
+                      isSelected={isSelected}
+                      token={token}
+                      layout={isGrid ? "grid" : "list"}
+                    />
+                  </button>
+                ) : (
+                  <Link
+                    href={`/collection/${token.contract_address && getCollectionFromAddress(token.contract_address)}/${token.token_id
+                      }`}
+                    className={`${isGrid ? "" : "flex"}`}
+                  >
+                    <L2ERC721Card
+                      key={index}
+                      token={token}
+                      layout={isGrid ? "grid" : "list"}
+                    />
+                  </Link>
+                )}
+              </>
+            );
+          }),
+        )}
         {!infiniteScroll &&
-          erc721Tokens.pages[0]?.items.length !== undefined &&
           erc721Tokens.pages[0]?.items.length > 9 && (
             <Link href={`/user/${ownerAddress}/${loadMoreAssetName}`}>
               <div
@@ -157,7 +157,6 @@ const L2ERC721Table = ({
               </div>
             </Link>
           )}
-
         {infiniteScroll &&
           isFetching &&
           hasNextPage &&

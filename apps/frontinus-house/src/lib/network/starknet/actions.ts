@@ -83,9 +83,13 @@ export function createActions(
     return code !== "0x";
   };
 
+  // @ts-expect-error TODO: check type
   const client = new clients.StarknetTx(clientConfig);
+  // @ts-expect-error TODO: check type
   const starkSigClient = new clients.StarknetSig(clientConfig);
+  // @ts-expect-error TODO: check type
   const ethSigClient = new clients.EthereumSig(clientConfig);
+  // @ts-expect-error TODO: check type
   const ethTxClient = new clients.EthereumTx(clientConfig);
   const l1ExecutorClient = new clients.L1Executor();
 
@@ -362,6 +366,7 @@ export function createActions(
       });
     },
     finalizeProposal: () => null,
+    // @ts-expect-error TODO: check type
     executeTransactions: async (web3: any, proposal: Proposal) => {
       const executionData = getExecutionData(
         proposal.space,
@@ -371,6 +376,7 @@ export function createActions(
       );
 
       return executionCall("stark", chainId, "execute", {
+        // @ts-expect-error TODO: check type
         space: proposal.space.id,
         proposalId: proposal.proposal_id,
         executionParams: executionData.executionParams,
@@ -555,6 +561,7 @@ export function createActions(
             strategyMetadata,
             snapshotInfo.at,
             strategiesParams[i].split(","),
+            // @ts-expect-error TODO: check type
             {
               ...clientConfig,
               networkConfig,

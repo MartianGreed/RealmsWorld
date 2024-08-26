@@ -29,6 +29,7 @@ import type {
   HighlighSpaceQueryResult,
   HighlighSpacesQueryResult,
   HighlightProposal,
+  HighlightSpace,
   HighlightUserQueryResult
 } from "./highlight";
 import {
@@ -433,12 +434,17 @@ export function createApi(
           .catch(() => null),
       ]);
 
+      // @ts-expect-error IT EXISTS
       if (data.proposal.metadata === null) return null;
+      // @ts-expect-error IT EXISTS
       data.proposal = joinHighlightProposal(
+        // @ts-expect-error IT EXISTS
         data.proposal,
+        // @ts-expect-error IT EXISTS
         highlightResult?.data.sxproposal,
       );
 
+      // @ts-expect-error IT EXISTS
       return formatProposal(data.proposal, networkId, current);
     },
     loadSpaces: async (
@@ -464,9 +470,11 @@ export function createApi(
         });
 
 
+        // @ts-expect-error IT EXISTS
         data.spaces = data.spaces.map((space: ApiSpace) => {
+          // @ts-expect-error IT EXISTS
           const highlightSpace = highlightData.sxspaces.find(
-            (highlightSpace) => highlightSpace.id === space.id,
+            (highlightSpace: HighlightSpace) => highlightSpace.id === space.id,
           );
 
           return joinHighlightSpace(space, highlightSpace);

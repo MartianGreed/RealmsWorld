@@ -44,6 +44,7 @@ export default function Page({
   if (!tokenAddresses) {
     return <div>Collection Not Found</div>;
   }
+
   if (tokenAddresses[SUPPORTED_L2_CHAIN_ID]) {
     return (
       <Suspense fallback={<LoadingSkeleton />}>
@@ -54,7 +55,9 @@ export default function Page({
         />
       </Suspense>
     );
-  } else if (tokenAddresses[SUPPORTED_L1_CHAIN_ID]) {
+  }
+
+  if (tokenAddresses[SUPPORTED_L1_CHAIN_ID]) {
     return (
       <L1TokenData
         collectionId={params.id}
@@ -78,7 +81,6 @@ const L2TokenData = async ({
   const erc721Token = await api.erc721Tokens.byId({
     id: contractAddress + ":" + tokenId,
   });
-  console.log(erc721Token);
 
   return (
     <>

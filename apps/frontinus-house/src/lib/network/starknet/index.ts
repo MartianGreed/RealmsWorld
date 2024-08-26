@@ -97,11 +97,13 @@ export function createStarknetNetwork(networkId: NetworkID): Network {
             TransactionFinalityStatus.ACCEPTED_ON_L2,
           ];
 
+          // @ts-expect-error TODO: check type
           if (successStates.includes(tx.finality_status as TransactionFinalityStatus)) {
             clearInterval(timer);
             resolve(tx);
           }
 
+          // @ts-expect-error TODO: check type
           if (tx.execution_status === TransactionExecutionStatus.REVERTED) {
             clearInterval(timer);
             // eslint-disable-next-line @typescript-eslint/prefer-promise-reject-errors

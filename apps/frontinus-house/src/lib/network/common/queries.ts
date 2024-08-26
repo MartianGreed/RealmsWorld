@@ -1,4 +1,4 @@
-import type { Leaderboard, Space, Space, User, Vote } from "@/types";
+import type { Leaderboard, Space, User, Vote } from "@/types";
 import gql from "graphql-tag";
 import type { ApiProposal, ApiSpace } from "./types";
 
